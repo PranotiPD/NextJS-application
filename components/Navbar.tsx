@@ -47,9 +47,9 @@ const Navbar = () => {
               <>
                 <Link
                   href="/login"
-                  className="hidden lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900"
+                  className="hidden rounded-md lg:block lg:text-sm lg:font-semibold lg:leading-6 lg:text-gray-900 hover:border-black border-2 px-3 py-1.5"
                 >
-                  Log in
+                  Login
                 </Link>
                 <Link
                   href="/register"

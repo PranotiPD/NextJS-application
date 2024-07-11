@@ -13,6 +13,9 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
+    emailToken: { type: String, default: null },
+    emailResetPassword: { type: String, default: null },
+    passwordResetTokenExpires: { type: Date, default: null }, // Field for token expiration
   },
   { timestamps: true }
 );
