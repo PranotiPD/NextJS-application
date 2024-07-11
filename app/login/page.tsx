@@ -62,16 +62,15 @@ const NextLoginPage = () => {
   return (
     sessionStatus !== "authenticated" && (
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="flex justify-center flex-col items-center">
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+            <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="flex justify-center flex-col items-center">
           {/* <Image src="/logo 1.png" alt="star logo" width={50} height={50} /> */}
           <h2 className="mt-6 text-center text-2xl leading-9 tracking-tight text-gray-900">
             Sign in to your account
           </h2>
         </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-          <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="email"
@@ -130,7 +129,7 @@ const NextLoginPage = () => {
 
                 <div className="text-sm leading-6">
                   <Link
-                    href="#"
+                    href="/forgetpassword"
                     className="text-black hover:text-gray-900"
                   >
                     Forgot password?
@@ -141,7 +140,7 @@ const NextLoginPage = () => {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full border border-black justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-white transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  className="flex w-full border border-black justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-white hover:border-black transition-colors hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                   Sign in
                 </button>
