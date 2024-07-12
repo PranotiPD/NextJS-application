@@ -6,10 +6,9 @@ import { sendResetPasswordEmail } from "@/lib/mail";
 
 export const POST = async (request : NextRequest) => {
     await connect();
-
     //get mail
     const { email } = await request.json();
-
+    
     //find user
     const user = await User.findOne({email})
 
@@ -17,11 +16,13 @@ export const POST = async (request : NextRequest) => {
     if(user){
         //generate unique token for password reset
         const passwordResetToken = uuidv4();
-        console.log("before email reset password saved to db");
+
         //send password reset email with token
         user.emailResetPassword = passwordResetToken;
+        //added 2 mins of expiration time
+        user.passwordResetTokenExpires = new Date(new Date().getTime() + 2 * 60 * 1000);
         await user.save();
-        console.log("email reset password saved to db");
+        
         //send password reset email with token
         await sendResetPasswordEmail(email, passwordResetToken);
 

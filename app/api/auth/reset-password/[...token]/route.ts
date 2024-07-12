@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import { sendNewPasswordEmail } from "@/lib/mail";
 
 export const GET = async (request : NextRequest) => {
+    console.log("I am inside get request");
     const token = request.nextUrl.pathname.split('/').pop();
     await connect();
 
@@ -13,17 +14,13 @@ export const GET = async (request : NextRequest) => {
     // if token has not expired
 
     const user = await User.findOne({
-        emailResetpassword : token,
+        emailResetPassword : token,
         $or : [
             { passwordResetTokenExpires : { $gt : new Date()}},
             { passwordResetTokenExpires : null},
         ]
     })
-    console.log(`Token : ${token}`);
-    console.log(`Current Time: ${new Date()}`);
-    console.log(`Token Expiry: ${user.passwordResetTokenExpires}`);
-    console.log(`Current Time Expiry: ${new Date()}`);
-
+  
     if(user){
         // if user found generate new secure password
         const newPassword = generateNewPassword();
