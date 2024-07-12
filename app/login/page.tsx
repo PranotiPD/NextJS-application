@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
 
-
 const NextLoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");

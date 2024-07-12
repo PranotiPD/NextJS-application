@@ -1,43 +1,52 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
-type ForgetPasswordInputs = {
-    email : string
-}
+const isValidEmail = (email: string) => {
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  return emailRegex.test(email);
+};
 
 const ForgetPassword = () => {
     const router = useRouter();
     
-    const onSubmit = async (data : ForgetPasswordInputs) => {
-        try {
-            const response = await fetch("/api/auth/reset-password", {
-                method : "POST",
-                headers : {
-                    "Content-Type" : "application/json"
-                },
-                body: JSON.stringify(data)
-            });
+    const handleSubmit = async (e : any) => {
+      e.preventDefault();
+      const email = e.target[0].value;
 
-            if(!response.ok){
-                throw new Error("There was an error sending an email");
-            }
+      if (!isValidEmail(email)) {
+        toast.error("Email is invalid");
+        return;
+      }
 
-            //if everything is ok now show success message
-            toast.success("If email is registered. You will receive reset link!")
-        } catch(error : any){
-            toast.error(error.message);
-        }
+      try {
+          const response = await fetch("/api/auth/reset-password", {
+              method : "POST",
+              headers : {
+                  "Content-Type" : "application/json"
+              },
+              body: JSON.stringify({email})
+          });
+          console.log("Response", response);
+
+          if(!response.ok){
+              throw new Error("There was an error sending an email");
+          }
+
+          //if everything is ok now show success message
+          toast.success("If email is registered. You will receive reset link!")
+          router.push("/login");
+      } catch(error : any){
+          toast.error(error.message);
+      }
     }
 
-    const {register, handleSubmit, formState : {errors, isSubmitting}} = useForm<ForgetPasswordInputs>();
     return(
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="text-center">Forgot Password</div>
               <div>
                 <label
